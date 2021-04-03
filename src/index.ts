@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const app = express();
+const port = process.env.PORT || 3333;
 
 app.use(bodyParser.json());
 app.use(bodyParser.raw({ type: "application/vnd.custom-type" }));
@@ -19,6 +20,6 @@ app.get("/", async (req, res) => {
   res.json({ Hello: user });
 });
 
-app.listen(3001, () => {
-  console.log(`Example app listening at http://localhost:3001`);
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
 });
