@@ -13,11 +13,11 @@ app.use(bodyParser.text({ type: "text/html" }));
 
 app.get("/", async (req, res) => {
   // console.time("db");
-  const user = await prisma.user.findUnique({
-    where: { id: 1 },
-  });
+  // const user = await prisma.user.findUnique({
+  //   where: { id: 1 },
+  // });
   // console.timeEnd("db");
-  res.json({ Hello: user });
+  res.json({ Hello: process.env.DATABASE_URL });
 });
 
 app.listen(port, () => {
