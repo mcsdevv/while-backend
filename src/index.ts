@@ -13,7 +13,9 @@ app.use(bodyParser.text({ type: "text/html" }));
 
 app.get("/", async (req, res) => {
   // console.time("db");
-  const user = await prisma.user.findMany();
+  const user = await prisma.derps.findMany({
+    where: { id: 1 },
+  });
   // console.timeEnd("db");
   res.json({ Hello: user });
 });
