@@ -7,6 +7,8 @@ const prisma = new PrismaClient();
 const app = express();
 const cookieSession = require("cookie-session");
 
+const port = process.env.PORT || 3001;
+
 app.use(bodyParser.json());
 app.use(bodyParser.raw({ type: "application/vnd.custom-type" }));
 app.use(bodyParser.text({ type: "text/html" }));
@@ -99,6 +101,6 @@ app.get("/auth/logout", (req: any, res) => {
   res.send(req.user);
 });
 
-app.listen(3001, () => {
-  console.log(`Example app listening at http://localhost:3001`);
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
 });
