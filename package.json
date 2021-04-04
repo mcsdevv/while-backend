@@ -1,10 +1,9 @@
 {
-  "name": "expressjs",
+  "name": "while-backend",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Jake Runzer",
-  "license": "MIT",
+  "author": "Matthew Sweeney",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "postinstall": "npx prisma generate",
