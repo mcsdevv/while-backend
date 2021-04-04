@@ -12,11 +12,9 @@ app.use(bodyParser.raw({ type: "application/vnd.custom-type" }));
 app.use(bodyParser.text({ type: "text/html" }));
 
 app.get("/", async (req, res) => {
-  // console.time("db");
   const user = await prisma.user.findUnique({
     where: { id: 1 },
   });
-  // console.timeEnd("db");
   res.json({ Hello: user });
 });
 
@@ -26,7 +24,8 @@ var GoogleStrategy = require("passport-google-oauth20").Strategy;
 app.use(
   cookieSession({
     // milliseconds of a day
-    maxAge: 24 * 60 * 60 * 1000,
+    // maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 10000,
     keys: ["herp", "derp"],
     cookie: { secure: false },
   })
@@ -83,12 +82,14 @@ app.get(
     failureRedirect: "/test",
   }),
   (req, res) => {
-    res.redirect("http://localhost:3000/");
+    res.redirect("http://localhost:3001/derps");
   }
 );
 
 app.get("/derps", async (req: any, res) => {
   console.log("auth", req.isAuthenticated());
+  console.log("host", req.host);
+  console.log("url", req.url);
   console.log(req.user);
   res.json({ Hello: "derps" });
 });
