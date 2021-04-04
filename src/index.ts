@@ -81,13 +81,14 @@ app.get(
     failureRedirect: "/test",
   }),
   (req, res) => {
-    res.redirect("http://localhost:3001/derps");
+    console.log("req", req.hostname, req.url);
+    res.redirect("/derps");
   }
 );
 
 app.get("/derps", async (req: any, res) => {
   console.log("auth", req.isAuthenticated());
-  console.log("host", req.host);
+  console.log("host", req.headers.host);
   console.log("url", req.url);
   console.log(req.user);
   res.json({ Hello: "derps" });
