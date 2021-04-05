@@ -1,46 +1,33 @@
+// * Libraries
 import bodyParser from "body-parser";
 import express from "express";
-
+import cookieSession from "cookie-session";
+import passport from "passport";
 import { PrismaClient } from "@prisma/client";
+var GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+// * Initialization
+const app = express();
+const port = process.env.PORT || 3001;
 const prisma = new PrismaClient();
 
-const app = express();
-const cookieSession = require("cookie-session");
-
-const port = process.env.PORT || 3001;
-
+// * Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.raw({ type: "application/vnd.custom-type" }));
 app.use(bodyParser.text({ type: "text/html" }));
-
-app.get("/", async (req, res) => {
-  const user = await prisma.user.findUnique({
-    where: { id: 1 },
-  });
-  res.json({ Hello: user });
-});
-
-var passport = require("passport");
-var GoogleStrategy = require("passport-google-oauth20").Strategy;
-
 app.use(
   cookieSession({
     // milliseconds of a day
     // maxAge: 24 * 60 * 60 * 1000,
     maxAge: 10000,
     keys: ["herp", "derp"],
-    cookie: { secure: false },
+    secure: false,
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Use the GoogleStrategy within Passport.
-//   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and Google
-//   profile), and invoke a callback with a user object.
-
+// * Passport
 passport.use(
   new GoogleStrategy(
     {
@@ -62,14 +49,15 @@ passport.use(
   )
 );
 
-passport.serializeUser((user: any, done: any) => {
+passport.serializeUser((user, done: any) => {
   done(null, user);
 });
 
-passport.deserializeUser((user: any, done: any) => {
+passport.deserializeUser((user, done: any) => {
   done(null, user);
 });
 
+// * Authentication
 app.get(
   "/auth/google",
   passport.authenticate("google", {
@@ -88,7 +76,15 @@ app.get(
   }
 );
 
-app.get("/derps", async (req: any, res) => {
+// * Routes
+app.get("/", async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: { id: 1 },
+  });
+  res.json({ Hello: user });
+});
+
+app.get("/derps", async (req, res) => {
   console.log("auth", req.isAuthenticated());
   console.log("host", req.headers.host);
   console.log("url", req.url);
@@ -96,7 +92,7 @@ app.get("/derps", async (req: any, res) => {
   res.json({ Hello: "derps" });
 });
 
-app.get("/auth/logout", (req: any, res) => {
+app.get("/auth/logout", (req, res) => {
   req.logout();
   res.send(req.user);
 });
