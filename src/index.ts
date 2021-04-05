@@ -16,9 +16,7 @@ app.use(express.raw({ type: "application/vnd.custom-type" }));
 app.use(express.text({ type: "text/html" }));
 app.use(
   cookieSession({
-    // milliseconds of a day
-    // maxAge: 24 * 60 * 60 * 1000,
-    maxAge: 10000,
+    maxAge: 24 * 60 * 60 * 1000,
     keys: ["herp", "derp"],
     secure: false,
   })
@@ -75,6 +73,11 @@ app.get(
   }
 );
 
+app.get("/auth/logout", (req, res) => {
+  req.logout();
+  res.send(req.user);
+});
+
 // * Routes
 app.get("/", async (req, res) => {
   const user = await prisma.user.findUnique({
@@ -89,11 +92,6 @@ app.get("/derps", async (req, res) => {
   console.log("url", req.url);
   console.log(req.user);
   res.json({ Hello: "derps" });
-});
-
-app.get("/auth/logout", (req, res) => {
-  req.logout();
-  res.send(req.user);
 });
 
 app.listen(port, () => {
