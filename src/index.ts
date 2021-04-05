@@ -1,5 +1,4 @@
 // * Libraries
-import bodyParser from "body-parser";
 import express from "express";
 import cookieSession from "cookie-session";
 import passport from "passport";
@@ -12,9 +11,9 @@ const port = process.env.PORT || 3001;
 const prisma = new PrismaClient();
 
 // * Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.raw({ type: "application/vnd.custom-type" }));
-app.use(bodyParser.text({ type: "text/html" }));
+app.use(express.json());
+app.use(express.raw({ type: "application/vnd.custom-type" }));
+app.use(express.text({ type: "text/html" }));
 app.use(
   cookieSession({
     // milliseconds of a day
