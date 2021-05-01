@@ -36,6 +36,11 @@ app.get("/", (req, res) => {
   res.send("I'm alive!");
 });
 
+app.get("/cookies", (req, res) => {
+  console.log("cookies", req.cookies);
+  res.json(req.cookies);
+});
+
 app.get("/derps", async (req, res) => {
   console.log("auth", req.isAuthenticated());
   console.log("host", req.headers.host);
