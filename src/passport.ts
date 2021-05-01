@@ -15,7 +15,7 @@ module.exports = (app: express.Application) => {
       maxAge: 24 * 60 * 60 * 1000,
       domain: ".while.so",
       keys: ["herp", "derp"],
-      secure: false,
+      secure: true,
     })
   );
 
