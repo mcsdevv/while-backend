@@ -26,7 +26,6 @@ router.get(
   }),
   (req: express.Request, res: express.Response) => {
     console.log("redirectUrl", redirectUrl);
-    req.login();
     res.redirect(redirectUrl?.toString() || "/");
   }
 );

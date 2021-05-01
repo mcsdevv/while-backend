@@ -13,6 +13,7 @@ module.exports = (app: express.Application) => {
     cookieSession({
       name: "session",
       maxAge: 24 * 60 * 60 * 1000,
+      domain: "while-frontend.vercel.app",
       keys: ["herp", "derp"],
       secure: false,
     })
