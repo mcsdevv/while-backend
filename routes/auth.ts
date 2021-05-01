@@ -5,14 +5,12 @@ import passport = require("passport");
 // * Initialization
 const router = express.Router();
 
-let derps: string | undefined = "test";
+let redirectUrl: string | undefined = "test";
 
 router.get(
   "/google",
   function (req, res, next) {
-    console.log("derps1", derps);
-    console.log("referrer", req.headers);
-    derps = req.headers.referer;
+    redirectUrl = req.headers.referer;
     next();
   },
   passport.authenticate("google", {
@@ -26,8 +24,8 @@ router.get(
     failureRedirect: "/test",
   }),
   (req: express.Request, res: express.Response) => {
-    console.log("derps2", derps);
-    res.redirect(`${process.env.WHILE_APP}/`);
+    console.log("redirectUrl", redirectUrl);
+    res.redirect(redirectUrl?.toString() || "/");
   }
 );
 
