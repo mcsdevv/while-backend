@@ -13,7 +13,7 @@ module.exports = (app: express.Application) => {
     cookieSession({
       name: "session",
       maxAge: 24 * 60 * 60 * 1000,
-      domain: ".while.so",
+      // domain: ".while.so",
       keys: ["herp", "derp"],
       secure: true,
     })

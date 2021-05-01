@@ -38,6 +38,7 @@ app.get("/", (req, res) => {
 
 app.get("/cookies", (req, res) => {
   console.log("cookies", req.cookies);
+  res.cookie("herp", "derp");
   res.json(req.cookies);
 });
 
