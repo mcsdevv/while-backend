@@ -25,11 +25,15 @@ require("./passport")(app);
 // * Application Routes
 app.use("/auth", authRoutes);
 
-app.get("/", async (req, res) => {
-  const user = await prisma.user.findUnique({
-    where: { id: 1 },
-  });
-  res.json({ Hello: user });
+// app.get("/", async (req, res) => {
+//   const user = await prisma.user.findUnique({
+//     where: { id: 1 },
+//   });
+//   res.json({ Hello: user });
+// });
+
+app.get("/", (req, res) => {
+  res.send("I'm alive!");
 });
 
 app.get("/derps", async (req, res) => {
