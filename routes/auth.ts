@@ -22,12 +22,15 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/test",
-  }),
-  (req: express.Request, res: express.Response) => {
-    console.log("redirectUrl", redirectUrl);
-    res.redirect(redirectUrl?.toString() || "/");
-  }
+    successRedirect: redirectUrl,
+    session: true,
+  })
 );
+
+// (req: express.Request, res: express.Response) => {
+//   console.log("redirectUrl", redirectUrl);
+//   res.redirect(redirectUrl?.toString() || "/");
+// }
 
 router.get("/logout", (req: express.Request, res: express.Response) => {
   req.logout();

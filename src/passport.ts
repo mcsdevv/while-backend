@@ -13,7 +13,6 @@ module.exports = (app: express.Application) => {
     cookieSession({
       name: "session",
       maxAge: 24 * 60 * 60 * 1000,
-      // maxAge: 1,
       keys: ["herp", "derp"],
       secure: false,
     })
