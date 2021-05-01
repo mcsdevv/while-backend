@@ -11,7 +11,9 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 module.exports = (app: express.Application) => {
   app.use(
     cookieSession({
+      name: "session",
       maxAge: 24 * 60 * 60 * 1000,
+      // maxAge: 1,
       keys: ["herp", "derp"],
       secure: false,
     })

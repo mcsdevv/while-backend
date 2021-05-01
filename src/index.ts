@@ -1,5 +1,6 @@
 // * Libraries
 import express from "express";
+import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 
 // * Routes
@@ -14,6 +15,11 @@ const prisma = new PrismaClient();
 app.use(express.json());
 app.use(express.raw({ type: "application/vnd.custom-type" }));
 app.use(express.text({ type: "text/html" }));
+app.use(cors());
+app.all("/*", function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 require("./passport")(app);
 
 // * Application Routes
