@@ -1,6 +1,7 @@
 // * Libraries
 import express from "express";
 import cors from "cors";
+import cookieSession from "cookie-session";
 // import { PrismaClient } from "@prisma/client";
 
 // * Routes
@@ -20,6 +21,15 @@ app.use(cors());
 //   res.header("Access-Control-Allow-Origin", "*");
 //   next();
 // });
+app.use(
+  cookieSession({
+    name: "session",
+    maxAge: 24 * 60 * 60 * 1000,
+    // domain: ".while.so",
+    keys: ["herp", "derp"],
+    secure: true,
+  })
+);
 require("./passport")(app);
 
 // * Application Routes
