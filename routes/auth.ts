@@ -26,6 +26,7 @@ router.get(
   }),
   (req: express.Request, res: express.Response) => {
     console.log("redirectUrl", redirectUrl);
+    // TODO Set logged in cookie
     res.redirect(redirectUrl?.toString() || "/");
   }
 );

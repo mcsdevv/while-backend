@@ -1,7 +1,6 @@
 // * Libraries
 import express from "express";
 import cookieSession from "cookie-session";
-var session = require("express-session");
 import passport from "passport";
 import { PrismaClient } from "@prisma/client";
 
@@ -11,12 +10,11 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 module.exports = (app: express.Application) => {
   app.use(
-    session({
+    cookieSession({
       name: "session",
       maxAge: 24 * 60 * 60 * 1000,
-      domain: ".while.so",
-      // keys: ["herp", "derp"],
-      secret: "derps",
+      // domain: ".while.so",
+      keys: ["herp", "derp"],
       // secure: true,
     })
   );
@@ -38,10 +36,10 @@ module.exports = (app: express.Application) => {
       },
       async (accessToken: any, refreshToken: any, profile: any, done: any) => {
         try {
-          const user = await prisma.user.findUnique({
-            where: { id: 1 },
-          });
-          return done(null, user);
+          // const user = await prisma.user.findUnique({
+          //   where: { id: 1 },
+          // });
+          return done(null, profile);
         } catch (err) {
           console.log("err", err);
           done(err);
