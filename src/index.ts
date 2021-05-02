@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 
 // * Routes
 const authRoutes = require("../routes/auth");
+const userRoutes = require("../routes/api/user");
 
 // * Initialization
 const app = express();
@@ -20,6 +21,7 @@ app.use(cors());
 
 // * Application Routes
 app.use("/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("I'm alive!");

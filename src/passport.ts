@@ -37,16 +37,21 @@ module.exports = (app: express.Application) => {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_AUTH_CALLBACK,
       },
-      async (accessToken: any, refreshToken: any, profile: any, done: any) => {
+      async (
+        _accessToken: string,
+        _refreshToken: string,
+        profile: passport.Profile,
+        done: any
+      ) => {
         try {
           const user = await prisma.user.upsert({
             where: { id: profile.id },
             update: { id: profile.id },
             create: {
               id: profile.id,
-              email: profile._json.email,
+              email: profile.emails ? profile.emails[0].value : "",
               name: profile.displayName,
-              picture: profile._json.picture,
+              picture: profile.photos ? profile.photos[0].value : "",
             },
           });
           return done(null, user);

@@ -1,6 +1,6 @@
 // * Libraries
-import express = require("express");
-import passport = require("passport");
+import express from "express";
+import passport from "passport";
 
 // * Initialization
 const router = express.Router();
@@ -28,7 +28,7 @@ router.get(
     console.log("redirectUrl", redirectUrl);
     // TODO Set logged in cookie
     console.log("session", req.session);
-    res.cookie("loggedIn", "1", { maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("loggedIn", "1", { expires: new Date(24 * 60 * 60 * 1000) });
     res.redirect(redirectUrl?.toString() || "/");
   }
 );
