@@ -1,7 +1,7 @@
 // * Libraries
 import express from "express";
 import cors from "cors";
-// import { PrismaClient } from "@prisma/client";
+import cookieParser from "cookie-parser";
 
 // * Routes
 const authRoutes = require("../routes/auth");
@@ -9,13 +9,13 @@ const authRoutes = require("../routes/auth");
 // * Initialization
 const app = express();
 const port = process.env.PORT || 3001;
-// const prisma = new PrismaClient();
 
 // * Middleware
 require("./passport")(app);
 app.use(express.json());
 app.use(express.raw({ type: "application/vnd.custom-type" }));
 app.use(express.text({ type: "text/html" }));
+app.use(cookieParser());
 app.use(cors());
 
 // * Application Routes
@@ -27,7 +27,6 @@ app.get("/", (req, res) => {
 
 app.get("/cookies", (req, res) => {
   console.log("cookies", req.cookies);
-  // console.log("session", req.session);
   console.log("user", req.user);
   res.cookie("herp", "derp", { domain: ".while.so" });
   res.json(req.cookies);
