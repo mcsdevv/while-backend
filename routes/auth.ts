@@ -27,6 +27,8 @@ router.get(
   (req: express.Request, res: express.Response) => {
     console.log("redirectUrl", redirectUrl);
     // TODO Set logged in cookie
+    console.log("session", req.session);
+    res.cookie("loggedIn", "1", { maxAge: 24 * 60 * 60 * 1000 });
     res.redirect(redirectUrl?.toString() || "/");
   }
 );
