@@ -8,8 +8,11 @@ datasource db {
 }
 
 model User {
-  id   Int    @id
-  name String
+  id        Int      @id
+  email     String   @default("")
+  name      String   @default("")
+  picture   String   @default("")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 }
 
 model derps {

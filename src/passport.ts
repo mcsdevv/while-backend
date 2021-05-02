@@ -36,10 +36,17 @@ module.exports = (app: express.Application) => {
       },
       async (accessToken: any, refreshToken: any, profile: any, done: any) => {
         try {
-          // const user = await prisma.user.findUnique({
-          //   where: { id: 1 },
-          // });
-          return done(null, profile);
+          const user = await prisma.user.upsert({
+            where: { id: profile.id },
+            update: { id: profile.id },
+            create: {
+              id: profile.id,
+              email: profile._json.email,
+              name: profile.displayName,
+              picture: profile._json.picture,
+            },
+          });
+          return done(null, user);
         } catch (err) {
           console.log("err", err);
           done(err);
