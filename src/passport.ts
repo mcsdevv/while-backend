@@ -1,6 +1,6 @@
 // * Libraries
 import express from "express";
-import cookieSession from "cookie-session";
+import expressSession from "express-session";
 import passport from "passport";
 import { PrismaClient } from "@prisma/client";
 
@@ -10,11 +10,14 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 module.exports = (app: express.Application) => {
   app.use(
-    cookieSession({
+    expressSession({
       name: "session",
-      maxAge: 24 * 60 * 60 * 1000,
+      secret: "derps",
+      cookie: {
+        maxAge: 24 * 60 * 60 * 1000,
+      },
       // domain: ".while.so",
-      keys: ["herp", "derp"],
+      // keys: ["herp", "derp"],
       // secure: true,
     })
   );

@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/cookies", (req, res) => {
-  console.log("cookies", req.cookies);
+  console.log("cookies", cookieParser.JSONCookies(req.cookies));
   console.log("user", req.user);
   res.cookie("herp", "derp", { domain: ".while.so" });
   res.json(req.cookies);
