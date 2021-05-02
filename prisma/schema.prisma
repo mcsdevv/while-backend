@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        Int      @id
+  id        String   @id
   email     String   @default("")
   name      String   @default("")
   picture   String   @default("")
