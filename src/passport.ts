@@ -6,6 +6,8 @@ import { PrismaClient } from "@prisma/client";
 // * Initialization
 const prisma = new PrismaClient();
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+// const JwtStrategy = require('passport-jwt').Strategy
+// const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 module.exports = (app: express.Application) => {
   passport.serializeUser((user, done: any) => {
@@ -15,6 +17,22 @@ module.exports = (app: express.Application) => {
   passport.deserializeUser((user, done: any) => {
     done(null, user);
   });
+
+  //   const opts = {
+  //     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  //     secretOrKey: 'secret',
+
+  //   }
+
+  //   passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+  //     console.log("JWT BASED AUTH GETTING CALLED") // called everytime a protected URL is being served
+  //     if (CheckUser(jwt_payload.data)) {
+  //         return done(null, jwt_payload.data)
+  //     } else {
+  //         // user account doesnt exists in the DATA
+  //         return done(null, false)
+  //     }
+  // }))
 
   passport.use(
     new GoogleStrategy(
