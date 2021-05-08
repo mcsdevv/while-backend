@@ -32,7 +32,7 @@ router.get(
         data: req.user,
       },
       "secret",
-      { expiresIn: 60 }
+      { expiresIn: "30d" }
     );
     res.redirect(
       `${
