@@ -7,10 +7,6 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  console.log(req.session);
-  const derps: any = req.session;
-  const id = derps.passport?.user.id;
-  console.log("user", id);
   try {
     const user = await prisma.user.findUnique({
       where: { id: "1" },

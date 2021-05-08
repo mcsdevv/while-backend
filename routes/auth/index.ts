@@ -34,13 +34,12 @@ router.get(
       "secret",
       { expiresIn: 60 }
     );
-    res.cookie("loggedIn", "1", {
-      domain: `.${process.env.WHILE_APP}`,
-      expires: new Date(24 * 60 * 60 * 1000),
-      secure: true,
-      sameSite: "none",
-    });
-    res.redirect(`${redirectUrl?.toString()}?jwt=${token}` || `?jwt=${token}`);
+    res.redirect(
+      `${
+        process.env.WHILE_APP
+      }/redirect?next=${redirectUrl?.toString()}&jwt=${token}` ||
+        `?jwt=${token}`
+    );
   }
 );
 
