@@ -13,11 +13,12 @@ router.get("/", async (req, res) => {
   console.log("user", id);
   try {
     const user = await prisma.user.findUnique({
-      where: { id },
+      where: { id: "1" },
     });
     res.status(200).json(user);
   } catch (err) {
     console.log("err", err);
+    res.status(500).send(err);
   }
 });
 
