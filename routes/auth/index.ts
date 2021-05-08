@@ -35,7 +35,7 @@ router.get(
       { expiresIn: 60 }
     );
     res.cookie("loggedIn", "1", {
-      domain: process.env.WHILE_APP,
+      domain: `.${process.env.WHILE_APP}`,
       expires: new Date(24 * 60 * 60 * 1000),
       secure: true,
       sameSite: "none",
