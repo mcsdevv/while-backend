@@ -6,18 +6,13 @@ export const isAuthenticated = (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const token = req.headers.authorization;
+  const token = req.query.token;
   if (!token) {
-    return res.status(401).send("Missing authorization token.");
-  }
-
-  const tokenTrimmed = token.substring(7, token.length);
-  if (tokenTrimmed === "undefined") {
-    return res.status(401).send("Token malformed.");
+    return res.status(401).json({ error: "Missing authorization token." });
   }
 
   try {
-    const jwtVerified: any = jwt.verify(tokenTrimmed, "secret");
+    const jwtVerified: any = jwt.verify(token.toString(), "secret");
     req.user = jwtVerified.data;
   } catch (error) {
     console.log("err", error);
