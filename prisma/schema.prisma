@@ -14,3 +14,13 @@ model User {
   picture   String   @default("")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 }
+
+model Contact {
+  id        String   @id
+  email     String   @default("")
+  name      String   @default("")
+  picture   String   @default("")
+  company   String   @default("")
+  position  String   @default("")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
