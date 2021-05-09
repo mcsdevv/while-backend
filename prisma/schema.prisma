@@ -24,3 +24,23 @@ model Contact {
   position  String   @default("")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 }
+
+model Meeting {
+  id        String   @id
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model Agenda {
+  id        String   @id
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model Note {
+  id        String   @id
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
+model Task {
+  id        String   @id
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
