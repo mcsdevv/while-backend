@@ -14,7 +14,3 @@ model User {
   picture   String   @default("")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 }
-
-model derps {
-  id Int @id @default(autoincrement())
-}

@@ -9,11 +9,11 @@ import { isAuthenticated } from "../../middleware/isAuthenticated";
 const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get("/", isAuthenticated, async (req, res) => {
-  console.log("user", req.user);
+router.get("/", isAuthenticated, async (req: any, res: express.Response) => {
   try {
+    const { id } = req.user;
     const user = await prisma.user.findUnique({
-      where: { id: "1" },
+      where: { id },
     });
     res.status(200).json(user);
   } catch (err) {
