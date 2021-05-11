@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 
 // * Routes
 const authRoutes = require("../routes/auth");
+const meetingRoutes = require("../routes/api/meetings");
 const userRoutes = require("../routes/api/user");
 
 // * Initialization
@@ -21,6 +22,7 @@ app.use(cors());
 
 // * Application Routes
 app.use("/auth", authRoutes);
+app.use("/api/meetings", meetingRoutes);
 app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {

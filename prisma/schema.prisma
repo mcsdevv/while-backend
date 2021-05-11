@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id        String   @id
-  email     String   @default("")
-  name      String   @default("")
-  picture   String   @default("")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  id        String    @id
+  email     String    @default("")
+  name      String    @default("")
+  picture   String    @default("")
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
+  meetings  Meeting[]
 }
 
 model Contact {
@@ -27,7 +28,9 @@ model Contact {
 
 model Meeting {
   id        String   @id
+  creatorId String   @map("creator_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  creator   User     @relation(fields: [creatorId], references: [id])
 }
 
 model Agenda {
