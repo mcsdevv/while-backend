@@ -31,19 +31,28 @@ model Meeting {
   creatorId String   @map("creator_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
   creator   User     @relation(fields: [creatorId], references: [id])
+  agendas   Agenda[]
+  notes     Note[]
+  tasks     Task[]
 }
 
 model Agenda {
   id        String   @id
+  meetingId String   @map("meeting_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  meeting   Meeting  @relation(fields: [meetingId], references: [id])
 }
 
 model Note {
   id        String   @id
+  meetingId String   @map("meeting_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  meeting   Meeting  @relation(fields: [meetingId], references: [id])
 }
 
 model Task {
   id        String   @id
+  meetingId String   @map("meeting_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  meeting   Meeting  @relation(fields: [meetingId], references: [id])
 }
