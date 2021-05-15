@@ -12,10 +12,10 @@ const router = express.Router();
 router.get("/:id", isAuthenticated, async (req: any, res: express.Response) => {
   try {
     const { id } = req.params?.id;
-    const notes = await prisma.note.findMany({
+    const agendas = await prisma.agenda.findMany({
       where: { meetingId: id },
     });
-    res.status(200).json(notes);
+    res.status(200).json(agendas);
   } catch (err) {
     console.log("err", err);
     res.status(500).send(err);
