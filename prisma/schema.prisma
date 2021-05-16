@@ -13,7 +13,10 @@ model User {
   name      String    @default("")
   picture   String    @default("")
   updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
+  agendas   Agenda[]
   meetings  Meeting[]
+  notes     Note[]
+  tasks     Task[]
 }
 
 model Contact {
@@ -38,21 +41,28 @@ model Meeting {
 
 model Agenda {
   id        String   @id
+  creatorId String   @map("creator_id")
   meetingId String   @map("meeting_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  creator   User     @relation(fields: [creatorId], references: [id])
   meeting   Meeting  @relation(fields: [meetingId], references: [id])
 }
 
 model Note {
   id        String   @id
+  creatorId String   @map("creator_id")
   meetingId String   @map("meeting_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  creator   User     @relation(fields: [creatorId], references: [id])
   meeting   Meeting  @relation(fields: [meetingId], references: [id])
 }
 
 model Task {
   id        String   @id
+  completed Boolean  @default(false)
+  creatorId String   @map("creator_id")
   meetingId String   @map("meeting_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  creator   User     @relation(fields: [creatorId], references: [id])
   meeting   Meeting  @relation(fields: [meetingId], references: [id])
 }
