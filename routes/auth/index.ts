@@ -34,11 +34,12 @@ router.get(
       "secret",
       { expiresIn: "30d" }
     );
+
+    console.log("redirect", redirectUrl);
     res.redirect(
-      `${
-        process.env.WHILE_APP
-      }/redirect?next=${redirectUrl?.toString()}&jwt=${token}` ||
-        `?jwt=${token}`
+      `${process.env.WHILE_APP}/redirect?next=${
+        redirectUrl?.toString() || process.env.WHILE_APP + "/dashboard"
+      }&jwt=${token}` || `?jwt=${token}`
     );
   }
 );

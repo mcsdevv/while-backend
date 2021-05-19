@@ -19,28 +19,28 @@ model User {
   tasks     Task[]
 }
 
-model Contact {
-  id        String   @id
-  email     String   @default("")
-  name      String   @default("")
-  picture   String   @default("")
-  company   String   @default("")
-  position  String   @default("")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-}
-
 model Meeting {
-  id        String   @id
-  creatorId String   @map("creator_id")
+  id        String   @id @default(uuid())
+  creatorId String?  @map("creator_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-  creator   User     @relation(fields: [creatorId], references: [id])
+  creator   User?    @relation(fields: [creatorId], references: [id])
   agendas   Agenda[]
   notes     Note[]
   tasks     Task[]
 }
 
+model Contact {
+  id        String   @id @default(uuid())
+  email     String   @default("")
+  name      String   @default("")
+  picture   String?  @default("")
+  company   String?  @default("")
+  position  String?  @default("")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+}
+
 model Agenda {
-  id        String   @id
+  id        String   @id @default(uuid())
   creatorId String   @map("creator_id")
   meetingId String   @map("meeting_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -49,7 +49,7 @@ model Agenda {
 }
 
 model Note {
-  id        String   @id
+  id        String   @id @default(uuid())
   creatorId String   @map("creator_id")
   meetingId String   @map("meeting_id")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -58,7 +58,7 @@ model Note {
 }
 
 model Task {
-  id        String   @id
+  id        String   @id @default(uuid())
   completed Boolean  @default(false)
   creatorId String   @map("creator_id")
   meetingId String   @map("meeting_id")
