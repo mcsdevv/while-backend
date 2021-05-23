@@ -12,7 +12,8 @@ model User {
   email     String    @default("")
   name      String    @default("")
   picture   String    @default("")
-  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
   agendas   Agenda[]
   meetings  Meeting[]
   notes     Note[]
@@ -21,29 +22,35 @@ model User {
 
 model Meeting {
   id        String   @id @default(uuid())
-  creatorId String?  @map("creator_id")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-  creator   User?    @relation(fields: [creatorId], references: [id])
+  creatorId String   @map("creator_id")
+  contactId String?  @map("contact_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  creator   User     @relation(fields: [creatorId], references: [id])
+  contact   Contact? @relation(fields: [contactId], references: [id])
   agendas   Agenda[]
   notes     Note[]
   tasks     Task[]
 }
 
 model Contact {
-  id        String   @id @default(uuid())
-  email     String   @default("")
-  name      String   @default("")
-  picture   String?  @default("")
-  company   String?  @default("")
-  position  String?  @default("")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  id        String    @id @default(uuid())
+  email     String    @default("")
+  name      String    @default("")
+  picture   String?   @default("")
+  company   String?   @default("")
+  position  String?   @default("")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
+  meetings  Meeting[]
 }
 
 model Agenda {
   id        String   @id @default(uuid())
   creatorId String   @map("creator_id")
   meetingId String   @map("meeting_id")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
   creator   User     @relation(fields: [creatorId], references: [id])
   meeting   Meeting  @relation(fields: [meetingId], references: [id])
 }
@@ -52,7 +59,8 @@ model Note {
   id        String   @id @default(uuid())
   creatorId String   @map("creator_id")
   meetingId String   @map("meeting_id")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
   creator   User     @relation(fields: [creatorId], references: [id])
   meeting   Meeting  @relation(fields: [meetingId], references: [id])
 }
@@ -62,7 +70,8 @@ model Task {
   completed Boolean  @default(false)
   creatorId String   @map("creator_id")
   meetingId String   @map("meeting_id")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
   creator   User     @relation(fields: [creatorId], references: [id])
   meeting   Meeting  @relation(fields: [meetingId], references: [id])
 }
