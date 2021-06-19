@@ -15,6 +15,7 @@ router.get("/", isAuthenticated, async (req: any, res: express.Response) => {
 
     const meetings: Meeting[] = await prisma.meeting.findMany({
       where: { creatorId: id },
+      include: { creator: true, contact: true },
     });
 
     res.status(200).json(meetings);
@@ -31,6 +32,7 @@ router.get("/:id", isAuthenticated, async (req: any, res: express.Response) => {
 
     const meeting: Meeting | null = await prisma.meeting.findUnique({
       where: { id: meetingId },
+      include: { creator: true, contact: true },
     });
 
     if (meeting && meeting.creatorId !== userId) {
@@ -50,8 +52,13 @@ router.post(
   async (req: any, res: express.Response) => {
     try {
       const { id } = req.user;
+      const { contact, title } = req.body;
 
-      const meeting = await prisma.meeting.create({ data: { creatorId: id } });
+      // TODO Ensure contact present
+
+      const meeting = await prisma.meeting.create({
+        data: { creatorId: id, title },
+      });
 
       res.status(200).json(meeting);
     } catch (err) {
