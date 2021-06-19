@@ -24,6 +24,7 @@ model Meeting {
   id        String   @id @default(uuid())
   creatorId String   @map("creator_id")
   contactId String?  @map("contact_id")
+  title     String?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
   creator   User     @relation(fields: [creatorId], references: [id])
