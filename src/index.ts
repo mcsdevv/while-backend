@@ -14,6 +14,10 @@ const userRoutes = require("../routes/api/user");
 // * Initialization
 const app = express();
 const port = process.env.PORT || 3001;
+const corsOptions = {
+  allowedHeaders: ["Authorization"],
+  maxAge: 86400,
+};
 
 // * Middleware
 require("./passport")(app);
@@ -21,7 +25,7 @@ app.use(express.json());
 app.use(express.raw({ type: "application/vnd.custom-type" }));
 app.use(express.text({ type: "text/html" }));
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // * Application Routes
 app.use("/auth", authRoutes);
