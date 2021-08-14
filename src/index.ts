@@ -15,6 +15,7 @@ const userRoutes = require("../routes/api/user");
 const app = express();
 const port = process.env.PORT || 3001;
 const corsOptions = {
+  origin: "*",
   maxAge: 86400,
 };
 
