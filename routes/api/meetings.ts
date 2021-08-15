@@ -54,13 +54,40 @@ router.post(
       const { id } = req.user;
       const { contact, title } = req.body;
 
-      // TODO Ensure contact present
+      // TODO Ensure contact and title present
 
       const meeting = await prisma.meeting.create({
         data: { creatorId: id, title },
       });
 
       res.status(200).json(meeting);
+    } catch (err) {
+      console.log("err", err);
+      res.status(500).send(err);
+    }
+  }
+);
+
+router.delete(
+  "/:id",
+  isAuthenticated,
+  async (req: any, res: express.Response) => {
+    try {
+      const { id } = req.query;
+
+      const meeting = await prisma.meeting.findUnique({
+        where: { id },
+      });
+
+      if (meeting?.creatorId !== req.user.id) {
+        res.status(403).send("Not authorized.");
+      }
+
+      await prisma.meeting.delete({
+        where: { id },
+      });
+
+      res.status(200).json({ deleted: id });
     } catch (err) {
       console.log("err", err);
       res.status(500).send(err);
