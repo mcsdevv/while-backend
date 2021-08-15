@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["nApi"]
 }
 
 datasource db {
@@ -13,6 +14,7 @@ model User {
   name      String    @default("")
   picture   String    @default("")
   createdAt DateTime  @default(now()) @map("created_at")
+  deletedAt DateTime? @map("deleted_at")
   updatedAt DateTime  @default(now()) @map("updated_at")
   agendas   Agenda[]
   contacts  Contact[]
@@ -22,14 +24,17 @@ model User {
 }
 
 model Meeting {
-  id        String   @id @default(uuid())
-  creatorId String   @map("creator_id")
-  contactId String?  @map("contact_id")
-  title     String?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
-  creator   User     @relation(fields: [creatorId], references: [id])
-  contact   Contact? @relation(fields: [contactId], references: [id])
+  id        String    @id @default(uuid())
+  creatorId String    @map("creator_id")
+  contactId String?   @map("contact_id")
+  endTime   DateTime? @map("end_time")
+  startTime DateTime? @map("start_time")
+  title     String
+  createdAt DateTime  @default(now()) @map("created_at")
+  deletedAt DateTime? @map("deleted_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
+  creator   User      @relation(fields: [creatorId], references: [id])
+  contact   Contact?  @relation(fields: [contactId], references: [id])
   agendas   Agenda[]
   notes     Note[]
   tasks     Task[]
@@ -44,38 +49,42 @@ model Contact {
   company   String?   @default("")
   position  String?   @default("")
   createdAt DateTime  @default(now()) @map("created_at")
+  deletedAt DateTime? @map("deleted_at")
   updatedAt DateTime  @default(now()) @map("updated_at")
   creator   User      @relation(fields: [creatorId], references: [id])
   meetings  Meeting[]
 }
 
 model Agenda {
-  id        String   @id @default(uuid())
-  creatorId String   @map("creator_id")
-  meetingId String   @map("meeting_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
-  creator   User     @relation(fields: [creatorId], references: [id])
-  meeting   Meeting  @relation(fields: [meetingId], references: [id])
+  id        String    @id @default(uuid())
+  creatorId String    @map("creator_id")
+  meetingId String    @map("meeting_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  deletedAt DateTime? @map("deleted_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
+  creator   User      @relation(fields: [creatorId], references: [id])
+  meeting   Meeting   @relation(fields: [meetingId], references: [id])
 }
 
 model Note {
-  id        String   @id @default(uuid())
-  creatorId String   @map("creator_id")
-  meetingId String   @map("meeting_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
-  creator   User     @relation(fields: [creatorId], references: [id])
-  meeting   Meeting  @relation(fields: [meetingId], references: [id])
+  id        String    @id @default(uuid())
+  creatorId String    @map("creator_id")
+  meetingId String    @map("meeting_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  deletedAt DateTime? @map("deleted_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
+  creator   User      @relation(fields: [creatorId], references: [id])
+  meeting   Meeting   @relation(fields: [meetingId], references: [id])
 }
 
 model Task {
-  id        String   @id @default(uuid())
-  completed Boolean  @default(false)
-  creatorId String   @map("creator_id")
-  meetingId String   @map("meeting_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
-  creator   User     @relation(fields: [creatorId], references: [id])
-  meeting   Meeting  @relation(fields: [meetingId], references: [id])
+  id        String    @id @default(uuid())
+  completed Boolean   @default(false)
+  creatorId String    @map("creator_id")
+  meetingId String    @map("meeting_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  deletedAt DateTime? @map("deleted_at")
+  updatedAt DateTime  @default(now()) @map("updated_at")
+  creator   User      @relation(fields: [creatorId], references: [id])
+  meeting   Meeting   @relation(fields: [meetingId], references: [id])
 }
