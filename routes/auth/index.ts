@@ -49,4 +49,4 @@ router.get("/logout", (req: express.Request, res: express.Response) => {
   res.redirect(`${process.env.WHILE_APP}/`);
 });
 
-module.exports = router;
+export { router as authRoutes };

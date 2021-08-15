@@ -22,4 +22,4 @@ router.get("/", isAuthenticated, async (req: any, res: express.Response) => {
   }
 });
 
-module.exports = router;
+export { router as userRoutes };

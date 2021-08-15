@@ -57,7 +57,7 @@ router.post(
       // TODO Ensure contact and title present
 
       const meeting = await prisma.meeting.create({
-        data: { creatorId: id, title },
+        data: { creatorId: id, title, contact },
       });
 
       res.status(200).json(meeting);
@@ -95,4 +95,4 @@ router.delete(
   }
 );
 
-module.exports = router;
+export { router as meetingRoutes };

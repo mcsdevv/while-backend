@@ -4,12 +4,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 // * Routes
-const authRoutes = require("../routes/auth");
-const agendaRoutes = require("../routes/api/agendas");
-const meetingRoutes = require("../routes/api/meetings");
-const noteRoutes = require("../routes/api/notes");
-const taskRoutes = require("../routes/api/tasks");
-const userRoutes = require("../routes/api/user");
+import { authRoutes } from "../routes/auth";
+import { agendaRoutes } from "../routes/api/agendas";
+import { meetingRoutes } from "../routes/api/meetings";
+import { noteRoutes } from "../routes/api/notes";
+import { taskRoutes } from "../routes/api/tasks";
+import { userRoutes } from "../routes/api/user";
 
 // * Initialization
 const app = express();
