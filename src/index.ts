@@ -2,6 +2,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import * as Sentry from "@sentry/node";
+import * as Tracing from "@sentry/tracing";
 
 // * Routes
 import { authRoutes } from "../routes/auth";
@@ -18,6 +20,19 @@ const corsOptions = {
   origin: "*",
   maxAge: 86400,
 };
+
+// * Sentry
+Sentry.init({
+  dsn: "https://59cedcb4aef745a084f5df967833c1a6@o969827.ingest.sentry.io/5920959",
+  integrations: [
+    new Sentry.Integrations.Http({ tracing: true }),
+    new Tracing.Integrations.Express({ app }),
+  ],
+  tracesSampleRate: 1.0,
+});
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+app.use(Sentry.Handlers.errorHandler());
 
 // * Middleware
 require("./passport")(app);
@@ -39,23 +54,8 @@ app.get("/", (req, res) => {
   res.send("I'm alive!");
 });
 
-app.get("/cookies", (req, res) => {
-  console.log("cookies", cookieParser.JSONCookies(req.cookies));
-  res.cookie("herp", "derp", { domain: ".while.so" });
-  res.json(req.cookies);
-});
-
-app.get("/derps", async (req, res) => {
-  console.log("auth", req.isAuthenticated());
-  console.log("session", req.session);
-  console.log("host", req.headers.host);
-  console.log("url", req.url);
-  console.log(req.user);
-  res.json({ Hello: "derps" });
-});
-
-process.on("uncaughtException", (exception) => {
-  console.log(exception);
+app.get("/debug-sentry", function mainHandler(req, res) {
+  throw new Error("My first Sentry error!");
 });
 
 app.listen(port, () => {
