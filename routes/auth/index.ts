@@ -35,13 +35,16 @@ router.get(
       { expiresIn: "30d" }
     );
 
-    res.cookie("derps", "derping", { domain: ".while.so" });
+    // res.redirect(
+    //   `${process.env.WHILE_APP}/redirect?next=${
+    //     redirectUrl?.toString() || process.env.WHILE_APP + "/dashboard"
+    //   }&jwt=${token}` || `?jwt=${token}`
+    // );
 
-    console.log("redirect", redirectUrl);
+    res.cookie("authorization", token, { domain: ".while.so" });
+
     res.redirect(
-      `${process.env.WHILE_APP}/redirect?next=${
-        redirectUrl?.toString() || process.env.WHILE_APP + "/dashboard"
-      }&jwt=${token}` || `?jwt=${token}`
+      `${redirectUrl?.toString() || process.env.WHILE_APP + "/dashboard"}`
     );
   }
 );
