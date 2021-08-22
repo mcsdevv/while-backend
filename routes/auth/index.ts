@@ -51,6 +51,7 @@ router.get(
 
 router.get("/logout", (req: express.Request, res: express.Response) => {
   req.logout();
+  res.cookie("authorization", { maxAge: 0 });
   res.redirect(`${process.env.WHILE_APP}/`);
 });
 
