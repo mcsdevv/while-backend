@@ -49,6 +49,7 @@ router.get(
 );
 
 router.get("/logout", (req: express.Request, res: express.Response, next) => {
+  console.log("user logged out", req.user);
   const domain =
     process.env.ENVIRONMENT == "development" ? undefined : ".while.so";
   try {
