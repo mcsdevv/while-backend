@@ -53,10 +53,6 @@ app.get("/", (req, res) => {
   res.send("I'm alive!");
 });
 
-app.get("/debug-sentry", function mainHandler(req, res) {
-  throw new Error("My first Sentry error!");
-});
-
 app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
 
 app.use(function onError(_err: any, _req: any, res: any, _next: any) {
