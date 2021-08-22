@@ -54,6 +54,10 @@ app.get("/derps", async (req, res) => {
   res.json({ Hello: "derps" });
 });
 
+process.on("uncaughtException", (exception) => {
+  console.log(exception);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
