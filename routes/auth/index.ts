@@ -48,12 +48,16 @@ router.get(
   }
 );
 
-router.get("/logout", (req: express.Request, res: express.Response) => {
+router.get("/logout", (req: express.Request, res: express.Response, next) => {
   const domain =
     process.env.ENVIRONMENT == "development" ? undefined : ".while.so";
-  req.logout();
-  res.clearCookie("authorization", { domain, path: "/" });
-  res.redirect(`${process.env.WHILE_APP}/`);
+  try {
+    req.logout();
+    res.clearCookie("authorization", { domain, path: "/" });
+    res.redirect(`${process.env.WHILE_APP}/`);
+  } catch (err) {
+    next(err);
+  }
 });
 
 export { router as authRoutes };
