@@ -30,9 +30,6 @@ Sentry.init({
   ],
   tracesSampleRate: 1.0,
 });
-app.use(Sentry.Handlers.requestHandler());
-app.use(Sentry.Handlers.tracingHandler());
-app.use(Sentry.Handlers.errorHandler());
 
 // * Middleware
 require("./passport")(app);
@@ -57,6 +54,10 @@ app.get("/", (req, res) => {
 app.get("/debug-sentry", function mainHandler(req, res) {
   throw new Error("My first Sentry error!");
 });
+
+app.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
+app.use(Sentry.Handlers.tracingHandler());
+app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
