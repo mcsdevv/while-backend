@@ -37,7 +37,7 @@ router.get(
 
     const domain =
       process.env.ENVIRONMENT === "development" ? undefined : ".while.so";
-    res.cookie("authorization", token, { domain });
+    res.cookie("authorization", token, { domain, path: "/" });
 
     res.redirect(
       `${redirectUrl?.toString() || process.env.WHILE_APP + "/dashboard"}`
@@ -47,7 +47,7 @@ router.get(
 
 router.get("/logout", (req: express.Request, res: express.Response) => {
   req.logout();
-  res.clearCookie("authorization");
+  res.clearCookie("authorization", { path: "/" });
   res.redirect(`${process.env.WHILE_APP}/`);
 });
 
