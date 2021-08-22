@@ -6,6 +6,8 @@ import jwt from "jsonwebtoken";
 // * Initialization
 const router = express.Router();
 
+const domain =
+  process.env.ENVIRONMENT === "development" ? undefined : ".while.so";
 let redirectUrl: string | undefined = "test";
 
 router.get(
@@ -35,8 +37,6 @@ router.get(
       { expiresIn: "30d" }
     );
 
-    const domain =
-      process.env.ENVIRONMENT === "development" ? undefined : ".while.so";
     res.cookie("authorization", token, { domain, path: "/" });
 
     res.redirect(
@@ -46,8 +46,9 @@ router.get(
 );
 
 router.get("/logout", (req: express.Request, res: express.Response) => {
+  console.log("cookies", req.cookies);
   req.logout();
-  res.clearCookie("authorization", { path: "/" });
+  res.clearCookie("authorization", { domain, path: "/" });
   res.redirect(`${process.env.WHILE_APP}/`);
 });
 
