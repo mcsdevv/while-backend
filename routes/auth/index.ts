@@ -6,14 +6,14 @@ import jwt from "jsonwebtoken";
 // * Initialization
 const router = express.Router();
 
-const domain =
-  process.env.ENVIRONMENT === "development" ? undefined : ".while.so";
 let redirectUrl: string | undefined = "test";
 
 router.get(
   "/google",
-  function (req, res, next) {
-    redirectUrl = req.headers.referer;
+  function (req: express.Request, _res, next) {
+    const redirect = req.query.next;
+    redirectUrl = redirect ? String(redirect) : req.headers.referer;
+
     next();
   },
   passport.authenticate("google", {
@@ -37,7 +37,10 @@ router.get(
       { expiresIn: "30d" }
     );
 
-    res.cookie("authorization", token, { domain, path: "/" });
+    const domain =
+      process.env.ENVIRONMENT == "development" ? undefined : ".while.so";
+
+    res.cookie("authorization", token, { domain });
 
     res.redirect(
       `${redirectUrl?.toString() || process.env.WHILE_APP + "/dashboard"}`
@@ -46,7 +49,8 @@ router.get(
 );
 
 router.get("/logout", (req: express.Request, res: express.Response) => {
-  console.log("hi");
+  const domain =
+    process.env.ENVIRONMENT == "development" ? undefined : ".while.so";
   req.logout();
   res.clearCookie("authorization", { domain, path: "/" });
   res.redirect(`${process.env.WHILE_APP}/`);
