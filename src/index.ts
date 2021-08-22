@@ -17,7 +17,12 @@ import { userRoutes } from "../routes/api/user";
 const app = express();
 const port = process.env.PORT || 3001;
 const corsOptions = {
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Max-Age",
+  ],
   origin: "*",
   maxAge: 86400,
 };
