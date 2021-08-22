@@ -35,13 +35,9 @@ router.get(
       { expiresIn: "30d" }
     );
 
-    // res.redirect(
-    //   `${process.env.WHILE_APP}/redirect?next=${
-    //     redirectUrl?.toString() || process.env.WHILE_APP + "/dashboard"
-    //   }&jwt=${token}` || `?jwt=${token}`
-    // );
-
-    res.cookie("authorization", token, { domain: ".while.so" });
+    const domain =
+      process.env.ENVIRONMENT === "development" ? undefined : ".while.so";
+    res.cookie("authorization", token, { domain });
 
     res.redirect(
       `${redirectUrl?.toString() || process.env.WHILE_APP + "/dashboard"}`
@@ -51,7 +47,7 @@ router.get(
 
 router.get("/logout", (req: express.Request, res: express.Response) => {
   req.logout();
-  res.cookie("authorization", { maxAge: 0 });
+  res.clearCookie("authorization");
   res.redirect(`${process.env.WHILE_APP}/`);
 });
 
