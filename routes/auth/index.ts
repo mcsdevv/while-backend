@@ -35,6 +35,8 @@ router.get(
       { expiresIn: "30d" }
     );
 
+    res.cookie("derps", "derping", { domain: ".while.so" });
+
     console.log("redirect", redirectUrl);
     res.redirect(
       `${process.env.WHILE_APP}/redirect?next=${
