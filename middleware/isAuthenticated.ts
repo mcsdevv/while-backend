@@ -15,8 +15,8 @@ export const isAuthenticated = (
   const jwtVerified: any = jwt.verify(token.toString(), "secret");
   req.user = jwtVerified.data;
   // } catch (error) {
-  console.log("err", error);
-  return res.status(401).send(error);
+  // console.log("err", error);
+  // return res.status(401).send(error);
   // }
 
   next();
