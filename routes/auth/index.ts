@@ -58,8 +58,7 @@ router.get("/logout", (req: express.Request, res: express.Response, next) => {
     res.clearCookie("authorization", { domain, path: "/" });
     res.redirect(`${process.env.WHILE_APP}/`);
   } catch (err) {
-    throw new Error(err);
-    // next(err);
+    next(err);
   }
 });
 

@@ -16,8 +16,7 @@ export const isAuthenticated = (
     req.user = jwtVerified.data;
   } catch (error) {
     console.log("err", error);
-    throw new Error(error);
-    // return res.status(401).send(error);
+    return res.status(401).send(error);
   }
 
   next();
