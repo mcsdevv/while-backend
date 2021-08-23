@@ -38,6 +38,8 @@ router.get(
       { expiresIn: "30d" }
     );
 
+    console.log("minor");
+
     const domain =
       process.env.ENVIRONMENT == "development" ? undefined : ".while.so";
 
