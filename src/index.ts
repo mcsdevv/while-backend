@@ -15,7 +15,7 @@ import { userRoutes } from "../routes/api/user";
 
 // * Initialization
 const app = express();
-const port = process.env.PORT || 3001;
+// const port = process.env.PORT || 3001;
 const corsOptions = {
   allowedHeaders: [
     "Content-Type",
@@ -70,6 +70,6 @@ process.on("uncaughtException", function (err: Error) {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(7216, () => {
+  console.log(`Example app listening at http://localhost:7216`);
 });
