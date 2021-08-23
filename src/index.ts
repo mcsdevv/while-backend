@@ -61,11 +61,6 @@ app.get("/", (req, res) => {
 
 app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
 
-// app.use(function onError(_err: any, _req: any, res: any, _next: any) {
-//   res.statusCode = 500;
-//   res.end(res.sentry + "\n");
-// });
-
 process.on("uncaughtException", function (err: Error) {
   try {
     console.log(err);

@@ -8,16 +8,19 @@ const router = express.Router();
 
 let redirectUrl: string | undefined = "test";
 
-router.get("/google", function (req: express.Request, _res, next) {
-  const redirect = req.query.next;
-  redirectUrl = redirect ? String(redirect) : req.headers.referer;
+router.get(
+  "/google",
+  function (req: express.Request, _res, next) {
+    const redirect = req.query.next;
+    redirectUrl = redirect ? String(redirect) : req.headers.referer;
 
-  // next();
+    next();
+  },
   passport.authenticate("google", {
     scope: ["profile", "email"],
     session: false,
-  });
-});
+  })
+);
 
 router.get(
   "/google/callback",
@@ -47,7 +50,6 @@ router.get(
 );
 
 router.get("/logout", (req: express.Request, res: express.Response, next) => {
-  console.log("user logged out", req.user);
   const domain =
     process.env.ENVIRONMENT == "development" ? undefined : ".while.so";
   try {
