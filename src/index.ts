@@ -56,7 +56,6 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {
-  console.log("I'm alive!");
   res.send("I'm alive!");
 });
 
