@@ -40,7 +40,7 @@ app.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
 app.use(Sentry.Handlers.tracingHandler());
 
 // * Middleware
-require("./passport")(app);
+// require("./passport")(app);
 app.use(express.json());
 app.use(express.raw({ type: "application/vnd.custom-type" }));
 app.use(express.text({ type: "text/html" }));
