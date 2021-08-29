@@ -18,11 +18,13 @@ const app = express();
 const port = process.env.PORT || 3001;
 const corsOptions = {
   allowedHeaders: [
+    "Accept",
     "Content-Type",
     "Authorization",
     "Access-Control-Allow-Origin",
     "Access-Control-Max-Age",
   ],
+  credentials: true,
   origin: "*",
   maxAge: 86400,
 };
@@ -40,7 +42,6 @@ app.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
 app.use(Sentry.Handlers.tracingHandler());
 
 // * Middleware
-require("./passport")(app);
 app.use(express.json());
 app.use(express.raw({ type: "application/vnd.custom-type" }));
 app.use(express.text({ type: "text/html" }));
