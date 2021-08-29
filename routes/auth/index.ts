@@ -33,20 +33,6 @@ router.get("/google", (req: express.Request, res: express.Response) => {
   res.redirect(url);
 });
 
-// router.get(
-//   "/google",
-//   function (req: express.Request, _res, next) {
-//     const redirect = req.query.next;
-//     redirectUrl = redirect ? String(redirect) : req.headers.referer;
-
-//     next();
-//   },
-//   passport.authenticate("google", {
-//     scope: ["profile", "email"],
-//     session: false,
-//   })
-// );
-
 router.get(
   "/google/callback",
   async (req: express.Request, res: express.Response) => {
@@ -95,43 +81,15 @@ router.get(
   }
 );
 
-// router.get(
-//   "/google/callback",
-//   passport.authenticate("google", {
-//     failureRedirect: process.env.WHILE_APP,
-//     session: false,
-//   }),
-//   (req: express.Request, res: express.Response) => {
-//     console.log("user", req.user);
-//     const token = jwt.sign(
-//       {
-//         data: req.user,
-//       },
-//       "secret",
-//       { expiresIn: "30d" }
-//     );
-
-//     console.log("minor");
-
-//     const domain =
-//       process.env.ENVIRONMENT == "development" ? undefined : ".while.so";
-
-//     res.cookie("authorization", token, { domain });
-
-//     res.redirect(
-//       `${redirectUrl?.toString() || process.env.WHILE_APP + "/dashboard"}`
-//     );
-//   }
-// );
-
-router.get("/logout", (req: express.Request, res: express.Response, next) => {
+router.get("/logout", (_req: express.Request, res: express.Response, next) => {
   const domain =
     process.env.ENVIRONMENT == "development" ? undefined : ".while.so";
   try {
-    req.logout();
+    // TODO Remove session?
     res.clearCookie("authorization", { domain, path: "/" });
     res.redirect(`${process.env.WHILE_APP}/`);
   } catch (err) {
+    console.log("errrrrrr", err);
     next(err);
   }
 });
