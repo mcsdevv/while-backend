@@ -2,7 +2,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
-import { google } from "googleapis";
+import { Auth, google } from "googleapis";
 
 // * Initialization
 const prisma = new PrismaClient();
@@ -11,7 +11,7 @@ const router = express.Router();
 let redirectUrl: string | undefined = "test";
 
 router.get("/google", (req: express.Request, res: express.Response) => {
-  const auth = new google.auth.OAuth2(
+  const auth: Auth.OAuth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
     process.env.GOOGLE_AUTH_CALLBACK
@@ -36,7 +36,7 @@ router.get("/google", (req: express.Request, res: express.Response) => {
 router.get(
   "/google/callback",
   async (req: express.Request, res: express.Response) => {
-    const auth = new google.auth.OAuth2(
+    const auth: Auth.OAuth2Client = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,
       process.env.GOOGLE_CLIENT_SECRET,
       process.env.GOOGLE_AUTH_CALLBACK
@@ -44,6 +44,7 @@ router.get(
 
     const { code } = req.query;
     const { tokens }: any = await auth.getToken(String(code));
+    console.log("tokens", tokens);
 
     const userDetails: any = jwt.decode(tokens.id_token);
 
@@ -63,7 +64,7 @@ router.get(
         {
           data: user,
         },
-        "secret",
+        String(process.env.JWT_SECRET),
         { expiresIn: "30d" }
       );
 
@@ -85,7 +86,6 @@ router.get("/logout", (_req: express.Request, res: express.Response, next) => {
   const domain =
     process.env.ENVIRONMENT == "development" ? undefined : ".while.so";
   try {
-    // TODO Remove session?
     res.clearCookie("authorization", { domain, path: "/" });
     res.redirect(`${process.env.WHILE_APP}/`);
   } catch (err) {

@@ -14,7 +14,10 @@ export const isAuthenticated = (
   const tokenStripped = token.substr(7);
 
   try {
-    const jwtVerified: any = jwt.verify(tokenStripped.toString(), "secret");
+    const jwtVerified: any = jwt.verify(
+      tokenStripped.toString(),
+      String(process.env.JWT_SECRET)
+    );
     req.user = jwtVerified.data;
   } catch (error) {
     console.log("err", error);
