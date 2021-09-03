@@ -56,6 +56,7 @@ app.use("/api/notes", noteRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/user", userRoutes);
 
+// * Healthcheck Route
 app.get("/", (req, res) => {
   console.log("I'm alive!");
   res.send("I'm alive!");
