@@ -57,7 +57,7 @@ router.post(
       // TODO Ensure contact and title present
 
       const meeting = await prisma.meeting.create({
-        data: { creatorId: id, title, contact, date },
+        data: { creatorId: id, title, date },
       });
 
       res.status(200).json(meeting);
