@@ -52,12 +52,12 @@ router.post(
   async (req: any, res: express.Response) => {
     try {
       const { id } = req.user;
-      const { contact, title } = req.body;
+      const { contact, date, title } = req.body;
 
       // TODO Ensure contact and title present
 
       const meeting = await prisma.meeting.create({
-        data: { creatorId: id, title, contact },
+        data: { creatorId: id, title, contact, date },
       });
 
       res.status(200).json(meeting);

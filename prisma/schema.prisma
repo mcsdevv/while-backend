@@ -27,6 +27,7 @@ model Meeting {
   id        String    @id @default(uuid())
   creatorId String    @map("creator_id")
   contactId String?   @map("contact_id")
+  date      DateTime?
   endTime   DateTime? @map("end_time")
   startTime DateTime? @map("start_time")
   title     String
